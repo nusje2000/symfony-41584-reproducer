@@ -1,0 +1,21 @@
+name: Build
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    code_analysis:
+        name: 'Code analysis (PHP: 7.4)'
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Setup PHP, with composer and extensions
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 7.4
+                    extensions: mbstring, xml, ctype, iconv, mysql, curl, intl
+            -   uses: actions/checkout@v1
+            -   uses: ramsey/composer-install@v1
+            -   name: PHPUnit
+                run: vendor/bin/phpunit
